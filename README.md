@@ -8,7 +8,7 @@ npm i aliyun-dns-setter -S
 
 # usage
 ```js
-const { setDns } = require('aliyun-dns-setter')
+const { setDns } = require('aliyun-dns-setter');
 
 const config = {
   "accessKey":"YOUR_ALIYUN_ACCESS_KEY",
@@ -18,11 +18,12 @@ const config = {
 }
 
 setDns(config)
-  .then(record => console.log(record))
+  .then(record => console.log(record));
 ```
 or 
 ```js
 const Core = require('@alicloud/pop-core');
+const { setDns } = require('aliyun-dns-setter');
 const config = {
   "accessKey":"YOUR_ALIYUN_ACCESS_KEY",
   "secretKey":"YOUR_ALIYUN_SECRET_KEY",
@@ -37,6 +38,6 @@ setDns({
   client,
   "ip":"10.0.0.0",
   "domain":"a.example.com"
-}).then(record => console.log(record))
+}).then(record => console.log(record));
 
 ```
