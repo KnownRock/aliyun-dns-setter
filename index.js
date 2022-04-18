@@ -10,14 +10,20 @@ function getRequestName(isNew) {
 
 module.exports = {
   setDns: async ({
+    client:parClient,
+
     accessKey,
     secretKey,
+
     ip,
     domain,
 
     withOutput = false,
   }) => {
-    const Client = new Core({
+    assert(parClient || (accessKey && secretKey), 'client or accessKey and secretKey must be provided');
+
+
+    const client = parClient || new Core({
       accessKeyId: accessKey,
       accessKeySecret: secretKey,
       endpoint: 'https://alidns.aliyuncs.com',
@@ -31,7 +37,7 @@ module.exports = {
     const mainDomain = splitedDomain.slice(splitedDomain.length - 2).join('.')
     const restDomain = splitedDomain.slice(0, splitedDomain.length - 2).join('.')
 
-    const recordPages = await Client.request('DescribeDomainRecords', {
+    const recordPages = await client.request('DescribeDomainRecords', {
       DomainName: mainDomain,
       PageSize: 10,
       KeyWord: restDomain,
@@ -53,7 +59,7 @@ module.exports = {
       }
     }
 
-    const res = await Client.request(requestName, {
+    const res = await client.request(requestName, {
       DomainName: mainDomain,
       RR: restDomain,
       Type: 'A',
